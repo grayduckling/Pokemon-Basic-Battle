@@ -1,0 +1,518 @@
+# #Pokemon Battle
+
+import random
+
+# #Pokemon list
+pokemon_stats_dic = {
+    "Chikorita": {
+        "Type": "This Pokemon is a Grass type; stronger against Water, weaker against Fire.\n",
+        "Stats": {
+            "Attack": 12,
+            "Defense": 7,
+            "HP": 33
+        },
+        "Moves": ["Tackle", "Growl"]
+    },
+    "Cyndaquil": {
+        "Type": "This Pokemon is a Fire type; stronger against Grass, weaker against Water.\n",
+        "Stats": {
+            "Attack": 15,
+            "Defense": 6,
+            "HP": 30
+        },
+        "Moves": ["Tackle", "Leer"]
+    },
+    "Totodile": {
+        "Type": "This Pokemon is a Water type; stronger against Fire, weaker against Grass.\n",
+        "Stats": {
+            "Attack": 13,
+            "Defense": 6,
+            "HP": 37
+        },
+        "Moves": ["Scratch", "Leer"]
+    },
+}
+
+#Player Item List
+player_items_dic = {
+    "Potion": 20,
+}
+error = "Invalid input. Please try again. \n"
+#Game Start
+game_on = True
+#1v1 Battle
+fight_on = True
+
+#Intro
+print("Welcome to the Pokemon Battle Simulator! "
+      "Please follow the prompts below to get started.\n")
+
+
+#Main Menu
+def menu_selection():
+  main_menu = input("This is the main menu, please select an option: \n"
+                    "1. Battle \n"
+                    "2. Items \n"
+                    "3. Quit \n")
+
+  return main_menu
+
+#Starter Selection
+def starter_selections():
+  player_chosen = input("Please choose a starting pokemon \n"
+                        "1. Chikorita \n"
+                        "2. Cyndaquil \n"
+                        "3. Totodile \n"
+                        "4. Back Menu \n")
+  #Chikorita Selection
+  if player_chosen == "1":
+    info = input("What would you like to know about Chikorita? \n"
+                 "1. Type \n"
+                 "2. Stats \n"
+                 "3. Moves \n"
+                 "4. Back \n"
+                 "5. Start Battle! \n")
+    if info == "1":
+      print(pokemon_stats_dic["Chikorita"]["Type"], "\n")
+      starter_selections()
+    elif info == "2":
+      print(pokemon_stats_dic["Chikorita"]["Stats"], "\n")
+      starter_selections()
+    elif info == "3":
+      print(pokemon_stats_dic["Chikorita"]["Moves"], "\n")
+      starter_selections()
+    elif info == "4":
+      starter_selections()
+    elif info == "5":
+      Chikorita = print("You have chosen 'Chikorita' as your starter pokemon.\n"
+                        "Your oponent has chosen 'Cyndaquil', good luck!\n"
+                        "Battle, Start!\n")
+      Chikorita = "Chikorita"
+      battle(Chikorita)
+    else:
+      print(error)
+      starter_selections()
+  #Cyndaquil Selection
+  elif player_chosen == "2":
+    info = input("What would you like to know about Cyndaquil? \n"
+                 "1. Type \n"
+                 "2. Stats \n"
+                 "3. Moves \n"
+                 "4. Back \n"
+                 "5. Start Battle! \n")
+    if info == "1":
+      print(pokemon_stats_dic["Cyndaquil"]["Type"], "\n")
+      starter_selections()
+    elif info == "2":
+      print(pokemon_stats_dic["Cyndaquil"]["Stats"], "\n")
+      starter_selections()
+    elif info == "3":
+      print(pokemon_stats_dic["Cyndaquil"]["Moves"], "\n")
+      starter_selections()
+    elif info == "4":
+      starter_selections()
+    elif info == "5":
+      Cyndaquil = print("You have chosen 'Cyndaquil' as your starter pokemon.\n"
+                        "Your oponent has chosen 'Totodile', good luck!\n"
+                        "Battle, Start!\n")
+      Cyndaquil = "Cyndaquil"
+      battle_cyndaquil(Cyndaquil)
+    else:
+      print(error)
+  #Totodile Selection
+  elif player_chosen == "3":
+    info = input("What would you like to know about Totodile? \n"
+                 "1. Type \n"
+                 "2. Stats \n"
+                 "3. Moves \n"
+                 "4. Back \n"
+                 "5. Start Battle! \n")
+    if info == "1":
+      print(pokemon_stats_dic["Totodile"]["Type"], "\n")
+      starter_selections()
+    elif info == "2":
+      print(pokemon_stats_dic["Totodile"]["Stats"], "\n")
+      starter_selections()
+    elif info == "3":
+      print(pokemon_stats_dic["Totodile"]["Moves"], "\n")
+      starter_selections()
+    elif info == "4":
+      starter_selections()
+    elif info == "5":
+      Totodile = print("You have chosen 'Totodile' as your starter pokemon.\n"
+                       "Your oponent has chosen 'Chikorita', good luck!\n"
+                       "Battle, Start!\n")
+      Totodile = "Totodile"
+      battle_totodile(Totodile)
+    else:
+      print(error)
+  #Error
+  else:
+    print (error)
+
+#Battle 1 - Chikorita
+def battle(Chikorita):
+  global fight_on
+  global game_on
+  Chikorita_HP = pokemon_stats_dic["Chikorita"]["Stats"]["HP"]
+  while fight_on:
+    print("Chikorita:", pokemon_stats_dic["Chikorita"]["Stats"])
+    print("Cyndaquil:", pokemon_stats_dic["Cyndaquil"]["Stats"])
+    print("\n")
+
+    def cyndaquil_opponent():
+        global fight_on
+        global game_on
+        opponents_choice = random.randint(1, 2)
+        #If Player's Pokemon HP is low or random is 1
+        if pokemon_stats_dic["Chikorita"]["Stats"]["HP"] <= 7 or \
+        pokemon_stats_dic["Chikorita"]["Stats"]["Defense"] <= 5 or \
+        opponents_choice == 1:
+          print("Cyndaquil used Tackle!")
+          Chikorita_HP = pokemon_stats_dic["Chikorita"]["Stats"]["HP"]
+          Chikorita_remaining_hp = Chikorita_HP - (
+              pokemon_stats_dic["Cyndaquil"]["Stats"]["Attack"] -
+              pokemon_stats_dic["Chikorita"]["Stats"]["Defense"])
+          pokemon_stats_dic["Chikorita"]["Stats"]["HP"] = Chikorita_remaining_hp
+          Chikorita_HP = Chikorita_remaining_hp
+          if Chikorita_HP <= 0:
+            print("Chikorita HP is now 0, you have been defeated!\n"
+                 "You have lost the battle. Thank you for playing!\n"
+                  "\n"
+                 "Run the code if you wish to play again!")
+            fight_on = False
+            game_on = False
+            return Chikorita_HP
+          else:
+            print(f"Chikorita's HP is now {Chikorita_remaining_hp} \n")
+            return Chikorita_HP
+        #Leer
+        elif opponents_choice == 2:
+          print("Cyndaquil used Leer!\n")
+          Chikorita_defense = pokemon_stats_dic["Chikorita"]["Stats"]["Defense"]
+          Chikorita_defense_down = Chikorita_defense - 1
+          pokemon_stats_dic["Chikorita"]["Stats"][
+              "Defense"] = Chikorita_defense_down
+          if Chikorita_defense_down < 5:
+            print("Chikorita's defense is already at its lowest!")
+          else:
+            print(f"Chikorita's defense is now {Chikorita_defense_down}")
+
+    if Chikorita == "Chikorita":
+      attack_choice = input("What would you like for Chikorita to do? \n"
+                            "1. Attack \n"
+                            "2. Items \n")
+      #Chikorita Attacks
+      if attack_choice == "1":
+        player_move = input("What move would you like to use? \n"
+                            "1. Tackle \n"
+                            "2. Growl \n"
+                            "3. Back \n")
+        if player_move == "1":
+          print("Chikorita used Tackle!\n")
+          Cyndaquil_HP = pokemon_stats_dic["Cyndaquil"]["Stats"]["HP"]
+          Cyndaquil_remaining_hp = Cyndaquil_HP - (
+              pokemon_stats_dic["Chikorita"]["Stats"]["Attack"] -
+              pokemon_stats_dic["Cyndaquil"]["Stats"]["Defense"])
+          print(f"Cyndaquil's HP is now {Cyndaquil_remaining_hp}")
+          pokemon_stats_dic["Cyndaquil"]["Stats"][
+              "HP"] = Cyndaquil_remaining_hp
+          if Cyndaquil_remaining_hp <= 0:
+            print("Chikorita has defeated Cyndaquil!\n"
+                  "Thanks for playing, re-run the code if you wish to fight again!")
+            fight_on = False
+            game_on = False
+          #Opponent Attacks
+          else:
+            cyndaquil_opponent()
+            if Chikorita_HP <= 0:
+              fight_on = False
+              game_on = False
+            else:
+              continue
+        elif player_move == "2":
+          print("Chikorita used Growl! \n")
+          if pokemon_stats_dic["Cyndaquil"]["Stats"]["Attack"] < 11:
+            print("Cyndaquil's Attack cannot be lowered any more!")
+            cyndaquil_opponent()
+          elif pokemon_stats_dic["Cyndaquil"]["Stats"]["Attack"] >= 11:
+            Cyndaquil_Attack = pokemon_stats_dic["Cyndaquil"]["Stats"][
+                "Attack"] - 1
+            print(f"Cyndaquil's Attack is now {Cyndaquil_Attack}")
+            pokemon_stats_dic["Cyndaquil"]["Stats"][
+                "Attack"] = Cyndaquil_Attack
+            cyndaquil_opponent()
+        elif player_move == "3":
+          battle(Chikorita)
+        else:
+          print("Invalid input, please try again.")
+          battle(Chikorita)
+      elif attack_choice == "2":
+        item_choice = input("What item would you like to use? \n"
+                            "1. Potion \n"
+                            "2. Back \n")
+        if item_choice == "1":
+          print("Restored Chikorita's HP by 20!")
+          healed_hp = pokemon_stats_dic["Chikorita"]["Stats"]["HP"] + 20
+          if healed_hp > 33:
+            pokemon_stats_dic["Chikorita"]["Stats"]["HP"] = 33
+            healed_hp = pokemon_stats_dic["Chikorita"]["Stats"]["HP"]
+            print(f"Chikorita's HP is now {healed_hp}")
+          elif healed_hp <=32:
+            pokemon_stats_dic["Chikorita"]["Stats"]["HP"] = healed_hp
+            print(f"Chikorita's HP is now {healed_hp}")
+            cyndaquil_opponent()
+        elif item_choice == "2":
+          battle(Chikorita)
+        else:
+          print("Invalid input, please try again.")
+          battle(Chikorita)
+      else:
+        print (error)
+    else:
+      print (error)
+#Battle 2 - Cyndaquil
+def battle_cyndaquil(Cyndaquil):
+  global fight_on
+  global game_on
+  Cyndaquil_HP = pokemon_stats_dic["Cyndaquil"]["Stats"]["HP"]
+  while fight_on:
+    print("Cyndaquil:", pokemon_stats_dic["Cyndaquil"]["Stats"])
+    print("Totodile:", pokemon_stats_dic["Totodile"]["Stats"])
+    print("\n")
+    def totodile_opponent():
+        global fight_on
+        global game_on
+        opponents_choice = random.randint(1, 2)
+        #If Player's Pokemon HP is low or random is 1
+        if pokemon_stats_dic["Cyndaquil"]["Stats"]["HP"] <= 7 or \
+        pokemon_stats_dic["Cyndaquil"]["Stats"]["Defense"] <= 5 or \
+        opponents_choice == 1:
+          print("Totodile used Scratch!")
+          Cyndaquil_HP = pokemon_stats_dic["Cyndaquil"]["Stats"]["HP"]
+          Cyndaquil_remaining_hp = Cyndaquil_HP - (
+              pokemon_stats_dic["Totodile"]["Stats"]["Attack"] -
+              pokemon_stats_dic["Cyndaquil"]["Stats"]["Defense"])
+          pokemon_stats_dic["Cyndaquil"]["Stats"]["HP"] = Cyndaquil_remaining_hp
+          Cyndaquil_HP = Cyndaquil_remaining_hp
+          if Cyndaquil_HP <= 0:
+            print("Cyndaquil HP is now 0, you have been defeated!\n"
+               "You have lost the battle. Thank you for playing! \n"
+               "Run the code if you wish to play again!")
+            fight_on = False
+            game_on = False
+            return Cyndaquil_HP
+          else:
+            print(f"Cyndaquil's HP is now {Cyndaquil_remaining_hp}\n")
+            return Cyndaquil_HP
+        #Leer
+        elif opponents_choice == 2:
+          print("Totodile used Leer!\n")
+          Cyndaquil_defense = pokemon_stats_dic["Cyndaquil"]["Stats"]["Defense"]
+          Cyndaquil_defense_down = Cyndaquil_defense - 1
+          pokemon_stats_dic["Cyndaquil"]["Stats"][
+              "Defense"] = Cyndaquil_defense_down
+          if Cyndaquil_defense_down < 3:
+            print("Cyndaquil's defense is already at its lowest!\n")
+          else:
+            print(f"Cyndaquil's defense is now {Cyndaquil_defense_down}")
+    if Cyndaquil == "Cyndaquil":
+      attack_choice = input("What would you like for Cyndaquil to do? \n"
+                            "1. Attack \n"
+                            "2. Items \n")
+      #Cyndaquil Attacks
+      if attack_choice == "1":
+        player_move = input("What move would you like to use? \n"
+                            "1. Tackle \n"
+                            "2. Leer \n"
+                            "3. Back \n")
+        if player_move == "1":
+          print("Cyndaquil used Tackle!\n")
+          Totodile_HP = pokemon_stats_dic["Totodile"]["Stats"]["HP"]
+          Totodile_remaining_hp = Totodile_HP - (
+              pokemon_stats_dic["Cyndaquil"]["Stats"]["Attack"] -
+              pokemon_stats_dic["Totodile"]["Stats"]["Defense"])
+          print(f"Totodile's HP is now {Totodile_remaining_hp}")
+          pokemon_stats_dic["Totodile"]["Stats"][
+              "HP"] = Totodile_remaining_hp
+          if Totodile_remaining_hp <= 0:
+            print("Cyndaquil has defeated Totodile!\n"
+                  "Thanks for playing, re-run the code if you wish to fight again!")
+            fight_on = False
+            game_on = False
+          #Opponent Attacks
+          else:
+            totodile_opponent()
+            if Cyndaquil_HP <= 0:
+              return Cyndaquil_HP
+            else:
+              continue
+        elif player_move == "2":
+          print("Cyndaquil used Leer!")
+          if pokemon_stats_dic["Totodile"]["Stats"]["Defense"] < 4:
+            print("Totodile's Defense cannot be lowered any more!")
+            totodile_opponent()
+          elif pokemon_stats_dic["Totodile"]["Stats"]["Defense"] >= 4:
+            Totodile_Defense = pokemon_stats_dic["Totodile"]["Stats"][
+                "Defense"] - 1
+            print(f"Totodile's Defense is now {Totodile_Defense}")
+            pokemon_stats_dic["Totodile"]["Stats"][
+                "Defense"] = Totodile_Defense
+            totodile_opponent()
+        elif player_move == "3":
+          battle_cyndaquil(Cyndaquil)
+        else:
+          print (error)
+      elif attack_choice == "2":
+        item_choice = input("What item would you like to use? \n"
+                            "1. Potion \n"
+                            "2. Back \n")
+        if item_choice == "1":
+          print("Restored Cyndaquil's HP by 20!")
+          healed_hp = pokemon_stats_dic["Cyndaquil"]["Stats"]["HP"] + 20
+          if healed_hp > 30:
+            pokemon_stats_dic["Cyndaquil"]["Stats"]["HP"] = 30
+            healed_hp = pokemon_stats_dic["Cyndaquil"]["Stats"]["HP"]
+            print(f"Cyndaquil's HP is now {healed_hp}")
+          elif healed_hp <=29:
+            pokemon_stats_dic["Cyndaquil"]["Stats"]["HP"] = healed_hp
+            print(f"Chikorita's HP is now {healed_hp}")
+        elif item_choice == "2":
+          battle_cyndaquil(Cyndaquil)
+        else:
+          print (error)
+      else:
+          print (error)
+    else:
+      print (error)
+          
+#Battle 3 - Totodile
+def battle_totodile(Totodile):
+  global fight_on 
+  global game_on
+  Totodile_HP = pokemon_stats_dic["Totodile"]["Stats"]["HP"]
+  while fight_on:
+    print("Totodile:", pokemon_stats_dic["Totodile"]["Stats"])
+    print("Chikorita:", pokemon_stats_dic["Chikorita"]["Stats"])
+    print("\n")
+    def chikorita_opponent():
+        global fight_on
+        global game_on
+        opponents_choice = random.randint(1, 2)
+        #If Player's Pokemon HP is low or random is 1
+        if pokemon_stats_dic["Totodile"]["Stats"]["HP"] <= 7 or \
+        pokemon_stats_dic["Totodile"]["Stats"]["Attack"] <= 10 or \
+        opponents_choice == 1:
+          print("Chikorita used Tackle!")
+          Totodile_HP = pokemon_stats_dic["Totodile"]["Stats"]["HP"]
+          Totodile_remaining_hp = Totodile_HP - (
+              pokemon_stats_dic["Chikorita"]["Stats"]["Attack"] -
+              pokemon_stats_dic["Totodile"]["Stats"]["Defense"])
+          pokemon_stats_dic["Totodile"]["Stats"]["HP"] = Totodile_remaining_hp
+          Totodile_HP = Totodile_remaining_hp
+          if Totodile_HP <= 0:
+            print("Totodile's HP is now 0, you have been defeated!\n"
+               "You have lost the battle. Thank you for playing! \n"
+               "Run the code if you wish to play again!")
+            fight_on = False
+            game_on = False
+            return Totodile_HP
+          else:
+            print(f"Totodile's HP is now {Totodile_remaining_hp}\n")
+            return Totodile_HP
+        #Growl
+        elif opponents_choice == 2:
+          print("Chikorita used Growl!")
+          Totodile_Attack = pokemon_stats_dic["Totodile"]["Stats"]["Attack"]
+          Totodile_Attack_down = Totodile_Attack - 1
+          pokemon_stats_dic["Totodile"]["Stats"][
+              "Attack"] = Totodile_Attack_down
+          if Totodile_Attack_down < 10:
+            print("Totodile's Attack is already at its lowest!\n")
+          else:
+            print(f"Totodile's Attack is now {Totodile_Attack_down}")
+    if Totodile == "Totodile":
+      attack_choice = input("What would you like for Totodile to do? \n"
+                            "1. Attack \n"
+                            "2. Items \n")
+      #Totodile Attacks
+      if attack_choice == "1":
+        player_move = input("What move would you like to use? \n"
+                            "1. Scratch \n"
+                            "2. Leer \n"
+                            "3. Back \n")
+        if player_move == "1":
+          print("Totodile used Scratch!\n")
+          Chikorita_HP = pokemon_stats_dic["Chikorita"]["Stats"]["HP"]
+          Chikorita_remaining_hp = Chikorita_HP - (
+              pokemon_stats_dic["Totodile"]["Stats"]["Attack"] -
+              pokemon_stats_dic["Chikorita"]["Stats"]["Defense"])
+          print(f"Chikorita's HP is now {Chikorita_remaining_hp}")
+          pokemon_stats_dic["Chikorita"]["Stats"][
+              "HP"] = Chikorita_remaining_hp
+          if Chikorita_remaining_hp <= 0:
+            print("Totodile has defeated Chikorita!\n"
+                  "Thanks for playing, re-run the code if you wish to fight again!")
+            fight_on = False
+            game_on = False
+          #Opponent Attacks
+          else:
+            chikorita_opponent()
+            if Totodile_HP <= 0:
+              fight_on = False
+              game_on = False
+            else:
+              continue
+        elif player_move == "2":
+          print("Totodile used Leer!")
+          if pokemon_stats_dic["Chikorita"]["Stats"]["Defense"] < 5:
+            print("Chikorita's Defense cannot be lowered any more!")
+            chikorita_opponent()
+          elif pokemon_stats_dic["Chikorita"]["Stats"]["Defense"] >= 5:
+            Chikorita_Defense = pokemon_stats_dic["Chikorita"]["Stats"][
+                "Defense"] - 1
+            print(f"Chikorita's Defense is now {Chikorita_Defense}")
+            pokemon_stats_dic["Chikorita"]["Stats"][
+                "Defense"] = Chikorita_Defense
+            chikorita_opponent()
+        else:
+          battle_totodile(Totodile)
+          print(error)
+      elif attack_choice == "2":
+        item_choice = input("What item would you like to use? \n"
+                            "1. Potion \n"
+                            "2. Back \n")
+        if item_choice == "1":
+          print("Restored Totodile's HP by 20!")
+          healed_hp = pokemon_stats_dic["Totodile"]["Stats"]["HP"] + 37
+          if healed_hp > 37:
+            pokemon_stats_dic["Totodile"]["Stats"]["HP"] = 37
+            healed_hp = pokemon_stats_dic["Totodile"]["Stats"]["HP"]
+            print(f"Totodile's HP is now {healed_hp}")
+          elif healed_hp <=37:
+            pokemon_stats_dic["Totodile"]["Stats"]["HP"] = healed_hp
+            print(f"Chikorita's HP is now {healed_hp}")
+        elif attack_choice == "2":
+          battle_totodile(Totodile)
+        else:
+          print(error)
+      else:
+        print(error)
+    else:
+      print(error)
+#Game Loop
+def game():
+  while game_on:
+    menu_choice = menu_selection()
+    if menu_choice == "1":
+      starter_selections()
+    elif menu_choice == "2":
+      print ("Potion: Heals 20 HP\n")
+      continue
+    elif menu_choice == "3":
+      print("Bye-bye!")
+      break
+    else:
+      print("Invalid choice, please try again \n")
+
+game()
